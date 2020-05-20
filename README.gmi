@@ -1,0 +1,19 @@
+# gemini-mode
+## A simple syntax-highlighting mode for text/gemini
+
+### This is a sub-subheading
+
+#### This is a sub-sub-subheading
+
+##### We can go deeper.
+
+```
+  ____                _       _ 
+ / ___| ___ _ __ ___ (_)_ __ (_)
+| |  _ / _ \ '_ ` _ \| | '_ \| |
+| |_| |  __/ | | | | | | | | | |
+ \____|\___|_| |_| |_|_|_| |_|_|
+```
+
+
+=> gemini://gus.guru/ GUS (Gemini Universal Search)
