@@ -1,7 +1,11 @@
 # gemini-mode
 ## A simple syntax-highlighting mode for text/gemini
 
+This is the first release of gemini.el, a very simple syntax-highlighting mode for text/gemini documents. Currently, support is not complete, but it should be enough to help with basic documents.
+
 ### This is a sub-subheading
+
+=> gemini://gus.guru/ GUS (Gemini Universal Search)
 
 #### This is a sub-sub-subheading
 
@@ -16,4 +20,3 @@
 ```
 
 
-=> gemini://gus.guru/ GUS (Gemini Universal Search)

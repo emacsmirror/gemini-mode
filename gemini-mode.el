@@ -54,6 +54,11 @@
 
 (define-derived-mode gemini-mode text-mode "gemini"
   "Major mode for editing text/gemini 'geminimap' documents"
-  (setq font-lock-defaults '(gemini-highlights)))
+  (setq font-lock-defaults '(gemini-highlights))
+  (visual-line-mode 1))
+
+(add-to-list 'auto-mode-alist '("\\.gmi\\'" . gemini-mode))
+(add-to-list 'auto-mode-alist '("\\.gemini\\'" . gemini-mode))
+(add-to-list 'auto-mode-alist '("\\.geminimap\\'" . gemini-mode))
 
 (provide 'gemini-mode)
