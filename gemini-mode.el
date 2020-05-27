@@ -1,13 +1,17 @@
-;;; gemini.el --- A simple highlighting package for text/gemini 
+;;; gemini-mode.el --- A simple highlighting package for text/gemini 
 
 ;; Copyright (C) 2020  Jason McBrayer
 
 ;; Author: Jason McBrayer <jmcbray@carcosa.net>
 ;; Created: 20 May 2020
 ;; Version: 0.1.0
-;; Keywords: syntax gemini
+;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
-;; Package-Requires: ((emacs "24"))
+
+;;; Commentary:
+
+;; This package provides a major mode for editing text/gemini files.
+;; Currently, it only provides syntax-highlighting support.
 
 ;; This file is not part of GNU Emacs.
 
@@ -51,14 +55,18 @@
       (,gemini-link-regexp . 'link)))
   "Font lock keywords for gemini-mode")
 
-
+;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
   "Major mode for editing text/gemini 'geminimap' documents"
   (setq font-lock-defaults '(gemini-highlights))
   (visual-line-mode 1))
 
-(add-to-list 'auto-mode-alist '("\\.gmi\\'" . gemini-mode))
-(add-to-list 'auto-mode-alist '("\\.gemini\\'" . gemini-mode))
-(add-to-list 'auto-mode-alist '("\\.geminimap\\'" . gemini-mode))
+;;;###autoload
+(progn 
+  (add-to-list 'auto-mode-alist '("\\.gmi\\'" . gemini-mode))
+  (add-to-list 'auto-mode-alist '("\\.gemini\\'" . gemini-mode))
+  (add-to-list 'auto-mode-alist '("\\.geminimap\\'" . gemini-mode)))
 
 (provide 'gemini-mode)
+
+;;; gemini-mode.el ends here
