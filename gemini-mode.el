@@ -1,4 +1,4 @@
-;;; gemini-mode.el --- A simple highlighting package for text/gemini 
+;;; gemini-mode.el --- A simple highlighting package for text/gemini
 
 ;; Copyright (C) 2020  Jason McBrayer
 
@@ -28,19 +28,23 @@
 ;; You should have received a copy of the GNU Affero General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+;;; Code:
 (defface gemini-heading-face-1
   '((t :inherit bold :height 1.8))
-  "Face for Gemini headings level 1")
+  "Face for Gemini headings level 1"
+  :group 'gemini-mode)
 (defface gemini-heading-face-2
   '((t :inherit bold :height 1.4))
-  "Face for Gemini headings level 2")
+  "Face for Gemini headings level 2"
+  :group 'gemini-mode)
 (defface gemini-heading-face-3
   '((t :inherit bold :height 1.2))
-  "Face for Gemini headings level 3")
+  "Face for Gemini headings level 3"
+  :group 'gemini-mode)
 (defface gemini-heading-face-rest
   '((t :inherit bold))
-  "Face for Gemini headings below level 3")
+  "Face for Gemini headings below level 3"
+  :group 'gemini-mode)
 
 (defvar gemini-highlights
   (let* ((gemini-heading-3-regexp "^###\s.*$")
@@ -53,7 +57,7 @@
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
       (,gemini-heading-1-regexp . 'gemini-heading-face-1)
       (,gemini-link-regexp . 'link)))
-  "Font lock keywords for gemini-mode")
+  "Font lock keywords for gemini-mode.")
 
 ;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
@@ -62,7 +66,7 @@
   (visual-line-mode 1))
 
 ;;;###autoload
-(progn 
+(progn
   (add-to-list 'auto-mode-alist '("\\.gmi\\'" . gemini-mode))
   (add-to-list 'auto-mode-alist '("\\.gemini\\'" . gemini-mode))
   (add-to-list 'auto-mode-alist '("\\.geminimap\\'" . gemini-mode)))
