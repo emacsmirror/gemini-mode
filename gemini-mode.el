@@ -57,7 +57,7 @@
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
       (,gemini-heading-1-regexp . 'gemini-heading-face-1)
       (,gemini-link-regexp . 'link)))
-  "Font lock keywords for gemini-mode.")
+  "Font lock keywords for `gemini-mode'.")
 
 ;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
