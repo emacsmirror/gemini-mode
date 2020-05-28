@@ -51,12 +51,16 @@
          (gemini-heading-2-regexp "^##\s.*$")
          (gemini-heading-1-regexp "^#\s.*$")
          (gemini-heading-rest-regexp "^###+\s.*$")
-         (gemini-link-regexp "^=>.*$"))
+         (gemini-link-regexp "^=>.*$")
+         (gemini-ulist-regexp "^\\*")
+         (gemini-preformatted-regexp "^```"))
     `((,gemini-heading-rest-regexp . 'gemini-heading-face-rest)
       (,gemini-heading-3-regexp . 'gemini-heading-face-3)
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
       (,gemini-heading-1-regexp . 'gemini-heading-face-1)
-      (,gemini-link-regexp . 'link)))
+      (,gemini-link-regexp . 'link)
+      (,gemini-ulist-regexp . 'font-lock-keyword-face)
+      (,gemini-preformatted-regexp . 'font-lock-builtin-face)))
   "Font lock keywords for `gemini-mode'.")
 
 ;;;###autoload
