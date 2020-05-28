@@ -20,3 +20,6 @@ This is the first release of gemini.el, a very simple syntax-highlighting mode f
 ```
 
 
+* list item
+* list item
+
