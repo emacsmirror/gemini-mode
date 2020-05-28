@@ -4,7 +4,7 @@
 
 ;; Author: Jason McBrayer <jmcbray@carcosa.net>
 ;; Created: 20 May 2020
-;; Version: 0.1.1
+;; Version: 0.2.0
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
 
