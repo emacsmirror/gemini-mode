@@ -29,6 +29,8 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Code:
+(require 'cl-macs)
+
 (defface gemini-heading-face-1
   '((t :inherit bold :height 1.8))
   "Face for Gemini headings level 1"
@@ -62,6 +64,54 @@
       (,gemini-ulist-regexp . 'font-lock-keyword-face)
       (,gemini-preformatted-regexp . 'font-lock-builtin-face)))
   "Font lock keywords for `gemini-mode'.")
+
+(defvar gemini-mode-map
+  (let ((map (make-keymap)))
+    (define-key map (kbd "C-c C-l") #'gemini-insert-link)
+    map)
+  "Keymap for `gemini-mode'.")
+
+;; See RFC 3986 (URI).
+(defconst gemini-regex-uri
+  "\\([a-zA-z0-9+-.]+:[^]\t\n\r<>,;() ]+\\)"
+  "Regular expression for matching URIs.")
+
+(defun gemini-get-used-uris ()
+  "Return a list of all used URIs in the buffer."
+  (save-excursion
+    (goto-char (point-min))
+    (let (uris)
+      (while (re-search-forward gemini-regex-uri nil t)
+        (push (match-string 1) uris))
+      uris)))
+
+(defun gemini-insert-link ()
+  "Insert new link, with interactive prompts.
+If there is an active region, use the text as the default URL, if
+it seems to be a URL, or link text value otherwise."
+  (interactive)
+  (cl-multiple-value-bind (begin end text uri)
+      (if (use-region-p)
+          ;; Use region as either link text or URL as appropriate.
+          (let ((region (buffer-substring-no-properties
+                         (region-beginning) (region-end))))
+            (if (string-match gemini-regex-uri region)
+                ;; Region contains a URL; use it as such.
+                (list (region-beginning) (region-end)
+                      nil (match-string 1 region))
+              ;; Region doesn't contain a URL, so use it as text.
+              (list (region-beginning) (region-end)
+                    region nil))))
+    (let* ((used-uris (gemini-get-used-uris))
+           (uri (completing-read "URL: "
+                                 used-uris nil nil uri))
+           (text (completing-read "Link text (blank for plain URL): "
+                                  nil nil nil text)))
+      (when (and begin end)
+        (delete-region begin end))
+      (insert "=> " uri)
+      (unless (string= text "")
+        (insert " " text)))))
 
 ;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
