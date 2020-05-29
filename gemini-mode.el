@@ -4,7 +4,7 @@
 
 ;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>
 ;; Created: 20 May 2020
-;; Version: 0.3.0
+;; Version: 0.4.0
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
 
@@ -68,6 +68,7 @@
 (defvar gemini-mode-map
   (let ((map (make-keymap)))
     (define-key map (kbd "C-c C-l") #'gemini-insert-link)
+    (define-key map (kbd "C-c RET") #'gemini-insert-list-item)
     map)
   "Keymap for `gemini-mode'.")
 
@@ -112,6 +113,18 @@ it seems to be a URL, or link text value otherwise."
       (insert "=> " uri)
       (unless (string= text "")
         (insert " " text)))))
+
+(defun gemini-insert-list-item ()
+  "Insert a new list item.
+If at the beginning of a line, just insert it. Otherwise
+go to the end of the current line, insert a newline, and
+insert a list item."
+  (interactive)
+  (if (equal (line-beginning-position) (point))
+      (insert "* ")
+    (end-of-line)
+    (newline)
+    (insert "* ")))
 
 ;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
