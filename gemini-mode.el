@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2020  Jason McBrayer
 
-;; Author: Jason McBrayer <jmcbray@carcosa.net>
+;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>
 ;; Created: 20 May 2020
 ;; Version: 0.2.0
 ;; Keywords: languages
