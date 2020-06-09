@@ -1,4 +1,4 @@
-;;; gemini-mode.el --- A simple highlighting package for text/gemini
+;;; gemini-mode.el --- A simple highlighting package for text/gemini -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Jason McBrayer
 
@@ -7,6 +7,7 @@
 ;; Version: 0.4.0
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
+;; Package-Requires: ((emacs "24.3"))
 
 ;;; Commentary:
 
@@ -26,10 +27,10 @@
 ;; GNU Affero General Public License for more details.
 
 ;; You should have received a copy of the GNU Affero General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
-(require 'cl-macs)
+(require 'cl-lib)
 
 (defface gemini-heading-face-1
   '((t :inherit bold :height 1.8))
