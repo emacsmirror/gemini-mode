@@ -4,7 +4,7 @@
 
 ;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>
 ;; Created: 20 May 2020
-;; Version: 0.5.1
+;; Version: 0.5.2
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
 ;; Package-Requires: ((emacs "24.3"))
@@ -133,7 +133,7 @@ insert a list item."
   (setq font-lock-defaults '(gemini-highlights))
   (if (fboundp #'visual-fill-column-mode)
       (progn
-        (visual-line-mode 0)
+        (visual-line-mode 1)
         (visual-fill-column-mode 1))
     (visual-line-mode 1)))
 
