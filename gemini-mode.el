@@ -4,7 +4,7 @@
 
 ;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>
 ;; Created: 20 May 2020
-;; Version: 0.4.0
+;; Version: 0.5.0
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
 ;; Package-Requires: ((emacs "24.3"))
@@ -131,7 +131,9 @@ insert a list item."
 (define-derived-mode gemini-mode text-mode "gemini"
   "Major mode for editing text/gemini 'geminimap' documents"
   (setq font-lock-defaults '(gemini-highlights))
-  (visual-line-mode 1))
+  (if (fboundp #'visual-fill-column-mode)
+      (visual-fill-column-mode 1)
+    (visual-line-mode 1)))
 
 ;;;###autoload
 (progn
