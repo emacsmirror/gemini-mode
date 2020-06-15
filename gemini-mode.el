@@ -4,7 +4,7 @@
 
 ;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>
 ;; Created: 20 May 2020
-;; Version: 0.5.2
+;; Version: 0.6.0
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
 ;; Package-Requires: ((emacs "24.3"))
@@ -48,6 +48,10 @@
   '((t :inherit bold))
   "Face for Gemini headings below level 3"
   :group 'gemini-mode)
+(defface gemini-quote-face
+  '((t :inherit italic))
+  "Face for quoted lines in Gemini"
+  :group 'gemini-mode)
 
 (defvar gemini-highlights
   (let* ((gemini-heading-3-regexp "^###\s.*$")
@@ -55,15 +59,17 @@
          (gemini-heading-1-regexp "^#\s.*$")
          (gemini-heading-rest-regexp "^###+\s.*$")
          (gemini-link-regexp "^=>.*$")
-         (gemini-ulist-regexp "^\\*")
-         (gemini-preformatted-regexp "^```"))
+         (gemini-ulist-regexp "^\\* .*$")
+         (gemini-preformatted-regexp "^```")
+         (gemini-quote-regexp "^> .*$"))
     `((,gemini-heading-rest-regexp . 'gemini-heading-face-rest)
       (,gemini-heading-3-regexp . 'gemini-heading-face-3)
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
       (,gemini-heading-1-regexp . 'gemini-heading-face-1)
       (,gemini-link-regexp . 'link)
       (,gemini-ulist-regexp . 'font-lock-keyword-face)
-      (,gemini-preformatted-regexp . 'font-lock-builtin-face)))
+      (,gemini-preformatted-regexp . 'font-lock-builtin-face)
+      (,gemini-quote-regexp . 'gemini-quote-face)))
   "Font lock keywords for `gemini-mode'.")
 
 (defvar gemini-mode-map
