@@ -131,11 +131,8 @@ insert a list item."
 (define-derived-mode gemini-mode text-mode "gemini"
   "Major mode for editing text/gemini 'geminimap' documents"
   (setq font-lock-defaults '(gemini-highlights))
-  (if (fboundp #'visual-fill-column-mode)
-      (progn
-        (visual-line-mode 1)
-        (visual-fill-column-mode 1))
-    (visual-line-mode 1)))
+  (visual-line-mode 1)
+  (when (featurep 'visual-fill-column (visual-fill-column-mode 1))))
 
 ;;;###autoload
 (progn
