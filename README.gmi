@@ -7,9 +7,6 @@ This is the first release of gemini.el, a very simple syntax-highlighting mode f
 
 => gemini://gus.guru/ GUS (Gemini Universal Search)
 
-#### This is a sub-sub-subheading
-
-##### We can go deeper.
 
 ```
   ____                _       _ 
