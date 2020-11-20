@@ -57,12 +57,21 @@
   "Face for unordered list items in Gemini"
   :group 'gemini-mode)
 
+;; See RFC 3986 (URI).
+(defconst gemini-regex-uri
+  "\\([a-zA-z0-9+-.]+:[^]\t\n\r<>,;() ]+\\)"
+  "Regular expression for matching URIs.")
+
+(defconst gemini-regex-link-line
+  "^=>[[:blank:]]?\\([^[:blank:]]+\\)\\([[:blank:]]?.*\\)?$"
+  "Regular expression for matching link lines.
+Used by ‘font-lock-defaults’ and ‘gemini-link-at-point’.")
+
 (defvar gemini-highlights
   (let* ((gemini-heading-rest-regexp "^####+[[:blank:]]*.*$")
          (gemini-heading-3-regexp "^###[[:blank:]]*.*$")
          (gemini-heading-2-regexp "^##[[:blank:]]*.*$")
          (gemini-heading-1-regexp "^#[[:blank:]]*.*$")
-         (gemini-link-regexp "^=>.*$")
          (gemini-ulist-regexp "^\\* .*$")
          (gemini-preformatted-regexp "^```")
          (gemini-quote-regexp "^>[[:blank:]]*.*$"))
@@ -70,7 +79,7 @@
       (,gemini-heading-3-regexp . 'gemini-heading-face-3)
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
       (,gemini-heading-1-regexp . 'gemini-heading-face-1)
-      (,gemini-link-regexp . 'link)
+      (,gemini-regex-link-line 1 'link)
       (,gemini-ulist-regexp . 'gemini-ulist-face)
       (,gemini-preformatted-regexp . 'font-lock-builtin-face)
       (,gemini-quote-regexp . 'gemini-quote-face)))
@@ -79,14 +88,10 @@
 (defvar gemini-mode-map
   (let ((map (make-keymap)))
     (define-key map (kbd "C-c C-l") #'gemini-insert-link)
+    (define-key map (kbd "C-c C-o") #'gemini-open-link-at-point)
     (define-key map (kbd "C-c RET") #'gemini-insert-list-item)
     map)
   "Keymap for `gemini-mode'.")
-
-;; See RFC 3986 (URI).
-(defconst gemini-regex-uri
-  "\\([a-zA-z0-9+-.]+:[^]\t\n\r<>,;() ]+\\)"
-  "Regular expression for matching URIs.")
 
 (defun gemini-get-used-uris ()
   "Return a list of all used URIs in the buffer."
@@ -136,6 +141,26 @@ insert a list item."
     (end-of-line)
     (newline)
     (insert "* ")))
+
+(defun gemini-link-at-point ()
+  "Return the link present on the line at point."
+  (let ((line (thing-at-point 'line t)))
+    (when (string-match gemini-regex-link-line line)
+      (match-string 1 line))))
+
+(defun gemini-open-link-at-point ()
+  "Open the link at point with elpher if it is installed."
+  (interactive)
+  (let ((link (gemini-link-at-point)))
+    (when link
+      (cond ((string-prefix-p "gemini://" link t)
+             (when (require 'elpher nil t)
+               (elpher-go link)))
+            ((file-exists-p link)
+             (find-file link))
+            ((string-match "https?://" link)
+             (browse-url link))
+            (t (error "Don't know what to do with %s" link))))))
 
 ;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
