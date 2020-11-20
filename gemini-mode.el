@@ -32,6 +32,12 @@
 ;;; Code:
 (require 'cl-lib)
 
+(eval-when-compile
+  (defvar font-lock-beg)
+  (defvar font-lock-end)
+  (defun elpher-go (_))
+  (defun visual-fill-column-mode (_)))
+
 (defface gemini-heading-face-1
   '((t :inherit bold :height 1.8))
   "Face for Gemini headings level 1"
