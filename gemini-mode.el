@@ -57,7 +57,7 @@
   (let* ((gemini-heading-3-regexp "^###\s.*$")
          (gemini-heading-2-regexp "^##\s.*$")
          (gemini-heading-1-regexp "^#\s.*$")
-         (gemini-heading-rest-regexp "^###+\s.*$")
+         (gemini-heading-rest-regexp "^####+\s.*$")
          (gemini-link-regexp "^=>.*$")
          (gemini-ulist-regexp "^\\* .*$")
          (gemini-preformatted-regexp "^```")
