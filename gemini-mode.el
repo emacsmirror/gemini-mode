@@ -68,20 +68,23 @@
 Used by ‘font-lock-defaults’ and ‘gemini-link-at-point’.")
 
 (defvar gemini-highlights
-  (let* ((gemini-heading-rest-regexp "^####+[[:blank:]]*.*$")
+  (let* ((gemini-preformatted-regexp "^```[^`]+```$")
+         (gemini-heading-rest-regexp "^####+[[:blank:]]*.*$")
          (gemini-heading-3-regexp "^###[[:blank:]]*.*$")
          (gemini-heading-2-regexp "^##[[:blank:]]*.*$")
          (gemini-heading-1-regexp "^#[[:blank:]]*.*$")
          (gemini-ulist-regexp "^\\* .*$")
-         (gemini-preformatted-regexp "^```")
          (gemini-quote-regexp "^>[[:blank:]]*.*$"))
-    `((,gemini-heading-rest-regexp . 'gemini-heading-face-rest)
+    ;; preformatted must be declared first has it must absolutely be set
+    ;; before any other face (for exemple to avoid a title inside a
+    ;; preformatted block to hijack it).
+    `((,gemini-preformatted-regexp . 'font-lock-builtin-face)
+      (,gemini-heading-rest-regexp . 'gemini-heading-face-rest)
       (,gemini-heading-3-regexp . 'gemini-heading-face-3)
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
       (,gemini-heading-1-regexp . 'gemini-heading-face-1)
       (,gemini-regex-link-line 1 'link)
       (,gemini-ulist-regexp . 'gemini-ulist-face)
-      (,gemini-preformatted-regexp . 'font-lock-builtin-face)
       (,gemini-quote-regexp . 'gemini-quote-face)))
   "Font lock keywords for `gemini-mode'.")
 
@@ -162,10 +165,32 @@ insert a list item."
              (browse-url link))
             (t (error "Don't know what to do with %s" link))))))
 
+(defun gemini-font-lock-extend-region-for-preformatted-blocks ()
+  "Extend the current font-lock focus to allow preformatted block discovering."
+  (save-excursion
+    (let (block-start block-end)
+      (goto-char font-lock-beg)
+      (end-of-line)
+      (when (re-search-backward "^```.*$" nil t)
+        (setq block-start (match-beginning 0))
+        (unless (eq block-start (point-min))
+          (setq block-start (1- block-start))))
+      (goto-char font-lock-end)
+      (beginning-of-line)
+      (when (re-search-forward "^```$" nil t)
+        (setq block-end (match-end 0))
+        (unless (eq block-end (point-max))
+          (setq block-end (1+ block-end))))
+      (when (and block-start block-end)
+        (setq font-lock-beg block-start
+              font-lock-end block-end)))))
+
 ;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
   "Major mode for editing text/gemini 'geminimap' documents"
   (setq font-lock-defaults '(gemini-highlights))
+  (add-hook 'font-lock-extend-region-functions
+            #'gemini-font-lock-extend-region-for-preformatted-blocks)
   (visual-line-mode 1)
   (when (require 'visual-fill-column nil t)
     (visual-fill-column-mode 1)))
