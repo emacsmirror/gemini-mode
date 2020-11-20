@@ -52,6 +52,10 @@
   '((t :inherit italic))
   "Face for quoted lines in Gemini"
   :group 'gemini-mode)
+(defface gemini-ulist-face
+  '((t :inherit font-lock-keyword-face))
+  "Face for unordered list items in Gemini"
+  :group 'gemini-mode)
 
 (defvar gemini-highlights
   (let* ((gemini-heading-rest-regexp "^####+[[:blank:]]*.*$")
@@ -67,7 +71,7 @@
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
       (,gemini-heading-1-regexp . 'gemini-heading-face-1)
       (,gemini-link-regexp . 'link)
-      (,gemini-ulist-regexp . 'font-lock-keyword-face)
+      (,gemini-ulist-regexp . 'gemini-ulist-face)
       (,gemini-preformatted-regexp . 'font-lock-builtin-face)
       (,gemini-quote-regexp . 'gemini-quote-face)))
   "Font lock keywords for `gemini-mode'.")
