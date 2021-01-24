@@ -63,7 +63,7 @@
   "Face for unordered list items in Gemini"
   :group 'gemini-mode)
 
-(defcustom gemini-mode-hook nil
+(defcustom gemini-mode-hook 'turn-on-visual-line-mode
   "Normal hook run when entering Gemini mode. Usually used to set line
 wrapping"
   :type 'hook
@@ -199,7 +199,6 @@ insert a list item."
               font-lock-end block-end)))))
 
 (defun turn-on-visual-fill-column-mode nil
-  "Unconditionally turn on visual-fill-column-mode"
   (require 'visual-fill-column)
   (visual-fill-column-mode 1))
 
