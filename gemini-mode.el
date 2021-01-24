@@ -4,10 +4,10 @@
 
 ;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>
 ;; Created: 20 May 2020
-;; Version: 0.6.0
+;; Version: 0.7.0
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
-;; Package-Requires: ((emacs "24.3"))
+;; Package-Requires: ((emacs "24.4"))
 
 ;;; Commentary:
 
@@ -61,6 +61,13 @@
 (defface gemini-ulist-face
   '((t :inherit font-lock-keyword-face))
   "Face for unordered list items in Gemini"
+  :group 'gemini-mode)
+
+(defcustom gemini-mode-hook nil
+  "Normal hook run when entering Gemini mode. Usually used to set line
+wrapping"
+  :type 'hook
+  :options '(turn-on-visual-line-mode turn-on-visual-fill-column-mode)
   :group 'gemini-mode)
 
 ;; See RFC 3986 (URI).
@@ -191,6 +198,11 @@ insert a list item."
         (setq font-lock-beg block-start
               font-lock-end block-end)))))
 
+(defun turn-on-visual-fill-column-mode nil
+  "Unconditionally turn on visual-fill-column-mode"
+  (require 'visual-fill-column)
+  (visual-fill-column-mode 1))
+
 ;;;###autoload
 (define-derived-mode gemini-mode text-mode "gemini"
   "Major mode for editing text/gemini 'geminimap' documents"
@@ -198,8 +210,7 @@ insert a list item."
   (add-hook 'font-lock-extend-region-functions
             #'gemini-font-lock-extend-region-for-preformatted-blocks)
   (visual-line-mode 1)
-  (when (require 'visual-fill-column nil t)
-    (visual-fill-column-mode 1)))
+  (run-hooks 'gemini-mode-hook))
 
 ;;;###autoload
 (progn
