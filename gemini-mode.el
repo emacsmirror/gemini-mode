@@ -2,9 +2,9 @@
 
 ;; Copyright (C) 2020  Jason McBrayer
 
-;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>
+;; Author: Jason McBrayer <jmcbray@carcosa.net>, tastytea <tastytea@tastytea.de>, Étienne Deparis <etienne@depar.is>
 ;; Created: 20 May 2020
-;; Version: 0.7.0
+;; Version: 1.0.0
 ;; Keywords: languages
 ;; Homepage: https://git.carcosa.net/jmcbray/gemini.el
 ;; Package-Requires: ((emacs "24.4"))
