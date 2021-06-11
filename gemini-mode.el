@@ -70,6 +70,12 @@ wrapping"
   :options '(turn-on-visual-line-mode turn-on-visual-fill-column-mode)
   :group 'gemini-mode)
 
+(defcustom gemini-timestamp-format "%a %d %b %Y %H:%M:%S %Z"
+  "Format for inserting timestamps in Gemini text documents.
+This includes TinyLogs headers, which need to be in specific formats. Valid values include \"%a %d %b %Y %H:%M:%S %Z\" and \"%Y-%m-%d %H:%M:%S %Z\". You can use other values suitable for `format-time-string', however."
+  :type 'string
+  :group 'gemini-mode)
+
 ;; See RFC 3986 (URI).
 (defconst gemini-regex-uri
   "\\([a-zA-z0-9+-.]+:[^]\t\n\r<>,;() ]+\\)"
@@ -106,6 +112,8 @@ Used by ‘font-lock-defaults’ and ‘gemini-link-at-point’.")
     (define-key map (kbd "C-c C-l") #'gemini-insert-link)
     (define-key map (kbd "C-c C-o") #'gemini-open-link-at-point)
     (define-key map (kbd "C-c RET") #'gemini-insert-list-item)
+    (define-key map (kbd "C-c C-t") #'gemini-insert-time-stamp)
+    (define-key map (kbd "C-c C-n") #'gemini-insert-tinylog-header)
     map)
   "Keymap for `gemini-mode'.")
 
@@ -157,6 +165,17 @@ insert a list item."
     (end-of-line)
     (newline)
     (insert "* ")))
+
+(defun gemini-insert-time-stamp ()
+  "Insert the current time into the buffer.
+Formatting depends on `gemini-timestamp-format'."
+  (interactive)
+  (insert (time-stamp-string gemini-timestamp-format)))
+
+(defun gemini-insert-tinylog-header (title)
+  (interactive "sEntry Title: ")
+  (insert "## " (time-stamp-string gemini-timestamp-format)
+          " " title "\n"))
 
 (defun gemini-link-at-point ()
   "Return the link present on the line at point."
