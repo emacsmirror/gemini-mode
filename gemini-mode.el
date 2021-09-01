@@ -31,6 +31,7 @@
 
 ;;; Code:
 (require 'cl-lib)
+(require 'time-stamp)
 
 (eval-when-compile
   (defvar font-lock-beg)
