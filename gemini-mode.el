@@ -63,6 +63,10 @@
   '((t :inherit font-lock-keyword-face))
   "Face for unordered list items in Gemini"
   :group 'gemini-mode)
+(defface gemini-preformatted-face
+  '((t :inherit (font-lock-builtin-face fixed-pitch)))
+  "Face for preformatted blocks in Gemini"
+  :group 'gemini-mode)
 
 (defcustom gemini-mode-hook 'turn-on-visual-line-mode
   "Normal hook run when entering Gemini mode. Usually used to set line
@@ -98,7 +102,7 @@ Used by ‘font-lock-defaults’ and ‘gemini-link-at-point’.")
     ;; preformatted must be declared first has it must absolutely be set
     ;; before any other face (for exemple to avoid a title inside a
     ;; preformatted block to hijack it).
-    `((,gemini-preformatted-regexp . 'font-lock-builtin-face)
+    `((,gemini-preformatted-regexp . 'gemini-preformatted-face)
       (,gemini-heading-rest-regexp . 'gemini-heading-face-rest)
       (,gemini-heading-3-regexp . 'gemini-heading-face-3)
       (,gemini-heading-2-regexp . 'gemini-heading-face-2)
